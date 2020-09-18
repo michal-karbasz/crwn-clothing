@@ -44,10 +44,16 @@ class SignIn extends Component {
             handleChange={this.handleChange}
             required
           />
-          <CustomButton type="submit">Sign in</CustomButton>
-          <CustomButton rel="noopener noreferrer" onClick={signInWithGoogle}>
-            Sign in With Google
-          </CustomButton>
+          <div className="buttons">
+            <CustomButton type="submit">Sign in</CustomButton>
+            <CustomButton
+              rel="noopener noreferrer"
+              onClick={signInWithGoogle}
+              isGoogleSignIn
+            >
+              Sign in With Google
+            </CustomButton>
+          </div>
         </form>
       </div>
     );
