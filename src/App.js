@@ -10,10 +10,6 @@ import HomePage from './pages/homepage/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 
 class App extends Component {
-  state = {
-    currentUser: null,
-  };
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
