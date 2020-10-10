@@ -1,5 +1,8 @@
+const findExistingItem = (cartItems, lookUpItem) =>
+  cartItems.find(item => item.id === lookUpItem.id);
+
 export const addItemToCart = (cartItems, cartItemToAdd) => {
-  const existingCartItem = cartItems.find(item => item.id === cartItemToAdd.id);
+  const existingCartItem = findExistingItem(cartItems, cartItemToAdd);
 
   return existingCartItem
     ? cartItems.map(item =>
@@ -8,4 +11,18 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
           : item
       )
     : [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+};
+
+export const reduceItemQuantity = (cartItems, cartItemToRemove) => {
+  const existingCartItem = findExistingItem(cartItems, cartItemToRemove);
+
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter(item => item.id !== cartItemToRemove.id);
+  }
+
+  return cartItems.map(item =>
+    item.id === cartItemToRemove.id
+      ? { ...item, quantity: item.quantity - 1 }
+      : item
+  );
 };

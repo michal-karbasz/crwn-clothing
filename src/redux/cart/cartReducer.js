@@ -1,4 +1,4 @@
-import { addItemToCart } from './cartUtils';
+import { addItemToCart, reduceItemQuantity } from './cartUtils';
 
 const { cartActionTypes } = require('./cartActionTypes');
 
@@ -18,6 +18,11 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload),
+      };
+    case cartActionTypes.REDUCE_ITEM_QUANTITY:
+      return {
+        ...state,
+        cartItems: reduceItemQuantity(state.cartItems, action.payload),
       };
     case cartActionTypes.REMOVE_ITEM_FROM_CART:
       return {
