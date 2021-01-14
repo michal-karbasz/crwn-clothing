@@ -17,11 +17,11 @@ export const reduceItemQuantity = (cartItems, cartItemToRemove) => {
   const existingCartItem = findExistingItem(cartItems, cartItemToRemove);
 
   if (existingCartItem.quantity === 1) {
-    return cartItems.filter(item => item.id !== cartItemToRemove.id);
+    return cartItems.filter(item => item.name !== cartItemToRemove.name);
   }
 
   return cartItems.map(item =>
-    item.id === cartItemToRemove.id
+    item.name === cartItemToRemove.name
       ? { ...item, quantity: item.quantity - 1 }
       : item
   );
