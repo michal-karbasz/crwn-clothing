@@ -15,7 +15,7 @@ const CheckoutItem = ({
   reduceQuantity,
 }) => {
   const { name, imageUrl, price, quantity } = cartItem;
-  console.log(imageUrl);
+
   return (
     <div className="checkout-item">
       <div className="image-container">
