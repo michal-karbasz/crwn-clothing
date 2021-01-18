@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { connect } from 'react-redux';
 
 import './sign-up.scss';
 
 import FormInput from '../../components/form-input/FormInput';
 import CustomButton from '../../components/custom-button/CustomButton';
+import { signUpStart } from '../../redux/user/userActions';
 
 class SignUp extends Component {
   state = { displayName: '', email: '', password: '', confirmPassword: '' };
 
-  handleSubmit = async event => {
+  handleSubmit = (event, signUp) => {
     const { displayName, email, password, confirmPassword } = this.state;
+
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -19,23 +20,7 @@ class SignUp extends Component {
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    signUp({ email, password, displayName });
   };
 
   handleChange = event => {
@@ -45,11 +30,16 @@ class SignUp extends Component {
 
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
+    const { signUp } = this.props;
+
     return (
       <div className="sign-up">
         <h2 className="title">I do not have an account</h2>
         <span>Sign up with your email and password</span>
-        <form className="sign-up-form" onSubmit={this.handleSubmit}>
+        <form
+          className="sign-up-form"
+          onSubmit={e => this.handleSubmit(e, signUp)}
+        >
           <FormInput
             type="text"
             name="displayName"
@@ -89,4 +79,9 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUp: (displayName, email, password) =>
+    dispatch(signUpStart(displayName, email, password)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
