@@ -24,25 +24,6 @@ class App extends Component {
 
   componentDidMount() {
     const { setCurrentUser, collections } = this.props;
-
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot(snapshot => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data(),
-          });
-        });
-      }
-
-      //   addCollectionAndDocuments(
-      //     'collections',
-      //     collections.map(({ title, items }) => ({ title, items }))
-      //   );
-      setCurrentUser(userAuth);
-    });
   }
 
   componentWillUnmount() {
@@ -80,3 +61,26 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// observable way
+// componentDidMount() {
+//     const { setCurrentUser, collections } = this.props;
+
+//     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+//       if (userAuth) {
+//         const userRef = await createUserProfileDocument(userAuth);
+
+//         userRef.onSnapshot(snapshot => {
+//           setCurrentUser({
+//             id: snapshot.id,
+//             ...snapshot.data(),
+//           });
+//         });
+//       }
+//     //   addCollectionAndDocuments(
+//     //     'collections',
+//     //     collections.map(({ title, items }) => ({ title, items }))
+//     //   );
+//       setCurrentUser(userAuth);
+//     });
+//   }
